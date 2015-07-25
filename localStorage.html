@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var fw = document.forms['writekeys'];
+            var fa = document.forms['accessvalue'];
+            var lb = document.getElementById('allButton');
+            var ul = document.getElementById('#all_keys');
+            console.log(fw,fa);
+
+            fw.addEventListener('submit', function(event) {
+                event.preventDefault();
+                console.log(fw.key.value, fw.val.value);
+                localStorage.setItem(fw.key.value, fw.val.value);
+            })
+
+            fa.addEventListener('submit', function(event) {
+                event.preventDefault();
+                console.log(fa.key.value);
+                document.querySelector('#key_value').innerHTML =
+                    localStorage.getItem(fa.key.value);
+            })
+
+            lb.addEventListener('click', function (event) {
+                for(var i = 0; i < localStorage.length; i++){
+                    var key = localStorage.key(i);
+                    console.log(i + ": " + key);
+                    createElement('li', ul, key + ' : ' +localStorage.getItem(key));
+                }
+
+                function createElement (elementType, parent, inner){
+                    var newElement = document.createElement(elementType);
+                    newElement.innerHTML = inner;
+                    parent.appendChild(newElement);
+                    document.appendChild(parent);
+                }
+            })
+
+        })
+
+        var o = {
+            name: 'Natalie'
+        };
+
+        localStorage.getItem('name');
+        localStorage.setItem('o', JSON.stringify(o));
+
+    </script>
+</head>
+<body>
+
+    <section>
+        <header>
+            <h1>Create a Key / Overwrite a Key</h1>
+        </header>
+        <form name="writekeys">
+            <input type="text" name="key" />
+            <input type="text" name="val"/>
+            <button>Save</button>
+        </form>
+    </section>
+
+    <section>
+        <header>
+            <h1>Access the Value of a Key</h1>
+        </header>
+        <form name="accessvalue">
+            <input type="text" name="key" />
+            <button>Get Value</button>
+        </form>
+        <div id="key_value"></div>
+    </section>
+
+    <section>
+        <header>
+            <h1>List of All Keys</h1>
+        </header>
+        <button id="allButton">List All Keys</button>
+        <ul id="all_keys"></ul>
+    </section>
+
+</body>
+</html>

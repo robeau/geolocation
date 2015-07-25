@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var worker = new Worker('pollingWorkers.js');
+        worker.addEventListener('message', function (event) {
+            console.log('On', new Date(), 'Twitch tweeted', event.data)
+        });
+        worker.addEventListener('error', function (err) {
+            console.log(err);
+        })
+        worker.postMessage(10000);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

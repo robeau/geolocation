@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+        function isPrime(num){
+            if (num === 2){
+                return true;
+            }
+            else{
+                for (var i = 2; i < num; i++){
+                    if (num%i === 0){
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+
+        function generatePrimes(num){
+            var count = 0;
+            var i = 0;
+            var primes = [];
+            while(primes.length < num){
+                if(isPrime(i)){
+                    primes.push(i);
+                }
+                i++;
+            }
+        }
+
+        var n = 10000;
+        var start = new Date();
+        var arr = generatePrimes(n);
+        console.log('It took ', (new Date() - start), ' ms to generate' , n , ' primes');
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

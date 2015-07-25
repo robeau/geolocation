@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script>
+    var worker = new Worker('workers.js');
+    worker.addEventListener('message', function (event) {
+        console.log(event.data);
+    });
+    worker.postMessage('Hello World');
+
+</script>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            var inp = document.querySelector('input');
+            inp.addEventListener('keypress', function (event) {
+                console.log(this.value + String.fromCodePoint(event.charCode));
+                localStorage.setItem('inp', this.value + String.fromCodePoint(event.charCode));
+            });
+
+            window.addEventListener('storage', function () {
+                inp.value = localStorage.getItem('inp');
+            });
+
+        });
+    </script>
+</head>
+<body>
+
+    <section>
+        <header>
+            <h1>Synchronized Data</h1>
+        </header>
+        <input type="text" />
+    </section>
+
+</body>
+</html>

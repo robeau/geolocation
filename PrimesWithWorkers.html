@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script>
+    var worker = new Worker('primesWorker.js');
+    var start = new Date();
+    worker.addEventListener('message', function (event) {
+        console.log('It took ', (new Date() - start), 'ms to generate', event.data, ' primes')
+    });
+    worker.addEventListener('error', function (err) {
+        console.log(err);
+    })
+    worker.postMessage(10000);
+
+</script>
+<body>
+
+</body>
+</html>
