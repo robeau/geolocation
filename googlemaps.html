@@ -95,11 +95,11 @@
                     position: { lat: lat, lng: lng},
                     map: map,
                     title: 'Hello World!',
-                    label: 'Z',
                     animation: google.maps.Animation.BOUNCE
                 });
             }
 
+            //polyline code
             var flightPath = new google.maps.Polyline({
                 path: myPath,
                 geodesic: true,
@@ -134,6 +134,24 @@
                 label: 'A'
             });
 
+            var contentString = 'Go-Live Labs <br/>121 West Washington Ave #219 <br/>Sunnyvale, CA 94086 ';
+            var image = 'go-live-logo.png';
+
+            var GoLiveMarker = new google.maps.Marker({
+                map: map,
+                position: new google.maps.LatLng(37.376436,-122.0306141),
+                title:"Go-Live Labs",
+                icon: image
+            });
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            google.maps.event.addListener(GoLiveMarker, 'click', function() {
+                infowindow.open(map,GoLiveMarker);
+            });
+
         }
 
         google.maps.event.addDomListener(window, 'load', loadMyPosition);
@@ -147,7 +165,7 @@
 <body>
 <section>
     <header>
-        <h1>Position tracer v1.0.3</h1>
+        <h1>Position tracer v1.0.5</h1>
     </header>
     <div id="map-canvas"></div>
     <div id="list"><ul>
@@ -165,6 +183,12 @@
                 <li>'Z' bounces.</li>
             </ul>
         </li>
+        <li>1.0.5
+            <ul>
+                <li>Added marker with info window at Go-Live Labs</li>
+                <li>End marker is no longer labeled 'Z'.</li>
+            </ul>
+            </li>
     </ul>
     </div>
 </section>
