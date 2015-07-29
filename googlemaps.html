@@ -68,6 +68,9 @@
         var geoLoc = navigator.geolocation;
         var map;
         var endMarker;
+        var mapOptions;
+        var infowindow;
+        var infoContent;
 
         function loadMyPosition() {
             // get the geolocation
@@ -86,6 +89,9 @@
             var lat = position.coords.latitude;
             var lng = position.coords.longitude;
 
+            //automatically scroll the map to center on new coordinates
+            map.setCenter({lat: lat, lng: lng});
+
             console.log(lat,lng);
             var newLatLng = new google.maps.LatLng(lat,lng);
             myPath.push(newLatLng);
@@ -96,6 +102,16 @@
                     map: map,
                     title: 'Hello World!',
                     animation: google.maps.Animation.BOUNCE
+                });
+                infoContent = 'Lat: ' + lat + ' Long: ' + lng;
+
+                infowindow = new google.maps.InfoWindow({
+                    content: infoContent
+                });
+
+                //clicking on the end marker opens an info window
+                google.maps.event.addListener(endMarker, 'click', function() {
+                    infowindow.open(map,endMarker);
                 });
             }
 
@@ -115,7 +131,8 @@
         function initialize(lat, lng) {
             var newLatLng = new google.maps.LatLng(lat,lng);
             myPath.push(newLatLng);
-            var mapOptions = {
+
+            mapOptions = {
                 center: { lat: lat, lng: lng},
                 zoom: 14
             };
@@ -134,7 +151,19 @@
                 label: 'A'
             });
 
-            var contentString = 'Go-Live Labs <br/>121 West Washington Ave #219 <br/>Sunnyvale, CA 94086 ';
+
+            infoContent = 'Lat: ' + lat + ' Long: ' + lng;
+
+            infowindow = new google.maps.InfoWindow({
+                content: infoContent
+            });
+
+            //clicking on the start marker opens an info window
+            google.maps.event.addListener(startMarker, 'click', function() {
+                infowindow.open(map,startMarker);
+            });
+
+            var goLiveContent = 'Go-Live Labs <br/>121 West Washington Ave #219 <br/>Sunnyvale, CA 94086 ';
             var image = 'go-live-logo.png';
 
             var GoLiveMarker = new google.maps.Marker({
@@ -144,12 +173,13 @@
                 icon: image
             });
 
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString
+            var goLiveInfowindow = new google.maps.InfoWindow({
+                content: goLiveContent
             });
 
+            //clicking on the go-live labs marker opens an info window
             google.maps.event.addListener(GoLiveMarker, 'click', function() {
-                infowindow.open(map,GoLiveMarker);
+                goLiveInfowindow.open(map,GoLiveMarker);
             });
 
         }
@@ -165,7 +195,7 @@
 <body>
 <section>
     <header>
-        <h1>Position tracer v1.0.5</h1>
+        <h1>Position tracer v1.0.6</h1>
     </header>
     <div id="map-canvas"></div>
     <div id="list"><ul>
@@ -188,7 +218,13 @@
                 <li>Added marker with info window at Go-Live Labs</li>
                 <li>End marker is no longer labeled 'Z'.</li>
             </ul>
-            </li>
+        </li>
+        <li>1.0.6
+            <ul>
+                <li>Map automatically scrolls to center on most recent position.</li>
+                <li>End marker shows an info window with coordinates when clicked.</li>
+            </ul>
+        </li>
     </ul>
     </div>
 </section>
